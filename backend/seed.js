@@ -28,7 +28,33 @@ const dishes = [
     ],
     instructions: 'Boil pasta, add sauce...',
     image: '/images/pasta.jpg'
+  },
+  {
+    name: 'Veg Burger',
+    category: 'Veg',
+    ingredients: [
+      { name: 'Burger Bun', price: 20 },
+      { name: 'Potato Patty', price: 30 },
+      { name: 'Lettuce', price: 15 },
+      { name: 'Cheese Slice', price: 20 },
+      { name: 'Mayonnaise', price: 10 }
+    ],
+    instructions: 'Assemble bun, patty, and veggies, then grill...',
+    image: '/images/veg-burger.jpg'
+  },
+  {
+    name: 'Mutton Curry',
+    category: 'Non-Veg',
+    ingredients: [
+      { name: 'Mutton', price: 200 },
+      { name: 'Onion', price: 10 },
+      { name: 'Tomato', price: 10 },
+      { name: 'Spices', price: 25 }
+    ],
+    instructions: 'Cook mutton with onions, tomatoes, and spices until tender...',
+    image: '/images/mutton-curry.jpg'
   }
+
 ];
 
 Dish.insertMany(dishes)

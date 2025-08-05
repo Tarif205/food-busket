@@ -1,4 +1,17 @@
-fetch('http://localhost:5000/api/dishes')
+//app.js
+
+
+const token = localStorage.getItem('token');
+if (!token) {
+  alert('Please log in first');
+  window.location.href = 'login.html';
+}
+
+fetch('http://localhost:5000/api/dishes', {
+  headers: {
+    'Authorization': `Bearer ${token}`
+  }
+})
   .then(res => res.json())
   .then(dishes => {
     const container = document.getElementById('dish-list');
@@ -10,7 +23,7 @@ fetch('http://localhost:5000/api/dishes')
       // Create ingredient checkboxes
       const ingredientList = dish.ingredients.map(ing => `
         <label>
-          <input type="checkbox" class="ingredient-checkbox" data-price="${ing.price}" checked>
+          <input type="checkbox" class="ingredient-checkbox" data-name="${ing.name}" data-price="${ing.price}" checked>
           ${ing.name} - $${ing.price}
         </label>
         <br>
@@ -22,6 +35,7 @@ fetch('http://localhost:5000/api/dishes')
         <h3>Select Ingredients:</h3>
         ${ingredientList}
         <p><strong>Total: $<span class="total-price">0</span></strong></p>
+        <button class="order-btn">Place Order</button>
         <img src="${dish.image}" alt="${dish.name}" width="200">
         <hr>
       `;
@@ -35,9 +49,63 @@ fetch('http://localhost:5000/api/dishes')
       dishDiv.querySelectorAll('.ingredient-checkbox').forEach(cb => {
         cb.addEventListener('change', () => updateTotal(dishDiv));
       });
+
+      // Place order button handler
+      dishDiv.querySelector('.order-btn').addEventListener('click', () => {
+        const checkboxes = dishDiv.querySelectorAll('.ingredient-checkbox');
+        const selectedIngredients = [];
+        let total = 0;
+
+        checkboxes.forEach(cb => {
+          if (cb.checked) {
+            const name = cb.dataset.name;
+            const price = parseFloat(cb.dataset.price);
+            selectedIngredients.push({ name, price });
+            total += price;
+          }
+        });
+
+        if (selectedIngredients.length === 0) {
+          alert('Please select at least one ingredient to order.');
+          return;
+        }
+
+        // fetch('http://localhost:5000/api/orders', {
+        //   method: 'POST',
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'Authorization': `Bearer ${token}`
+        //   },
+        //   body: JSON.stringify({ ingredients: selectedIngredients, totalPrice: total })
+        // })
+        fetch('http://localhost:5000/api/orders', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            ingredients: selectedIngredients,
+            totalPrice: total
+          })
+        })
+        .then(res => res.json())
+        .then(data => {
+          console.log("✅ Server response:", data);
+          alert(data.msg || 'Order placed successfully!');
+        })
+        .catch(err => {
+          console.error('❌ Error placing order:', err);
+          alert('Failed to place order.');
+        });
+
+      });
     });
   })
-  .catch(err => console.error('Error fetching dishes:', err));
+  .catch(err => {
+    console.error('Error fetching dishes:', err);
+    alert('Failed to load dishes. Please try again later.');
+  });
 
 // Update the total price based on selected ingredients
 function updateTotal(dishDiv) {
@@ -49,4 +117,11 @@ function updateTotal(dishDiv) {
     }
   });
   dishDiv.querySelector('.total-price').textContent = total.toFixed(2);
-} 
+}
+
+// Logout button logic (make sure you have a button with id="logoutBtn" in your index.html)
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  localStorage.removeItem('token');
+  window.location.href = 'login.html';
+});
+

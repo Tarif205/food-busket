@@ -1,3 +1,5 @@
+//dishRoutes.js
+// routes/dishRoutes.js
 const express = require('express');
 const router = express.Router();
 const { getDishes, getDishById } = require('../controllers/dishController');

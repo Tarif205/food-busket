@@ -1,3 +1,4 @@
+//backend/seed.js
 const mongoose = require('mongoose');
 const Dish = require('./models/Dish');
 

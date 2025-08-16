@@ -1,3 +1,4 @@
+//dishController.js
 const Dish = require('../models/Dish');
 
 const getDishes = async (req, res) => {

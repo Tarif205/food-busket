@@ -1,7 +1,7 @@
 //userController.js
 // Import User model
 const User = require('../models/User');
-
+const Order = require('../models/Order');
 // Import JWT library to create tokens
 const jwt = require('jsonwebtoken');
 
@@ -43,6 +43,83 @@ exports.login = async (req, res) => {
   // Send back a token
   res.json({ token: generateToken(user._id) });
 };
+
+
+// --------- Get User Profile ----------  <<< NEW
+exports.getUserProfile = async (req, res) => {  // <<< NEW
+  try {  // <<< NEW
+    const user = await User.findById(req.user.id).select('-password');  // <<< NEW
+    if (user) res.json(user);  // <<< NEW
+    else res.status(404).json({ msg: 'User not found' });  // <<< NEW
+  } catch (err) {  // <<< NEW
+    console.error('Get profile error:', err);  // <<< NEW
+    res.status(500).json({ msg: 'Server error fetching profile' });  // <<< NEW
+  }  // <<< NEW
+};  // <<< NEW
+
+// --------- Update User Profile ----------  <<< NEW
+exports.updateUserProfile = async (req, res) => {  // <<< NEW
+  try {  // <<< NEW
+    const user = await User.findById(req.user.id);  // <<< NEW
+    if (user) {  // <<< NEW
+      user.name = req.body.name || user.name;  // <<< NEW
+      user.email = req.body.email || user.email;  // <<< NEW
+      user.address = req.body.address || user.address;  // <<< NEW
+      user.number = req.body.number || user.number;  // <<< NEW
+      if (req.body.password) user.password = req.body.password;  // <<< NEW
+
+      const updatedUser = await user.save();  // <<< NEW
+      res.json({  // <<< NEW
+        _id: updatedUser._id,  // <<< NEW
+        name: updatedUser.name,  // <<< NEW
+        email: updatedUser.email,  // <<< NEW
+        address: updatedUser.address,  // <<< NEW
+        number: updatedUser.number  // <<< NEW
+      });  // <<< NEW
+    } else {  // <<< NEW
+      res.status(404).json({ msg: 'User not found' });  // <<< NEW
+    }  // <<< NEW
+  } catch (err) {  // <<< NEW
+    console.error('Update profile error:', err);  // <<< NEW
+    res.status(500).json({ msg: 'Server error updating profile' });  // <<< NEW
+  }  // <<< NEW
+};  // <<< NEW
+
+// --------- Get User Order History ----------  <<< NEW
+exports.getUserOrders = async (req, res) => {  // <<< NEW
+  try {  // <<< NEW
+    const orders = await Order.find({ 'user._id': req.user.id });  // <<< NEW
+    res.json(orders);  // <<< NEW
+  } catch (err) {  // <<< NEW
+    console.error('Get orders error:', err);  // <<< NEW
+    res.status(500).json({ msg: 'Server error fetching orders' });  // <<< NEW
+  }  // <<< NEW
+};  // <<< NEW
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // // controllers/userController.js

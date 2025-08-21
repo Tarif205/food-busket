@@ -1,0 +1,35 @@
+// frontend/recipe.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recipe Page</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header>
+    <h1 id="dish-title">Dish Name</h1>
+    <nav>
+      <a href="index.html">Back to Dashboard</a>
+      <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
+      <button id="logoutBtn">Logout</button>
+    </nav>
+  </header>
+
+  <main>
+    <img id="dish-img" src="" alt="Dish Image" width="300"/>
+    
+    <h2>Ingredients</h2>
+    <div id="ingredients-list"></div> <!-- checkboxes with quantities -->
+
+    <h2>Recipe Steps</h2>
+    <div id="instructions"></div>
+
+    <button id="add-to-cart-recipe">Add to Cart</button>
+  </main>
+
+  <script src="src/components/app.js"></script>
+</body>
+</html>

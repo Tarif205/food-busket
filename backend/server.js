@@ -36,6 +36,8 @@ require('dotenv').config();
 const userRoutes = require('./routes/userRoutes');
 const dishRoutes = require('./routes/dishRoutes');
 const orderRoutes = require('./routes/orderRoutes');
+const cartRoutes = require('./routes/cartRoutes'); 
+//app.use('/api/cart', authMiddleware, cartRoutes);
 
 const app = express();
 
@@ -51,7 +53,7 @@ app.use(express.json());
 app.use('/api/users', userRoutes);
 app.use('/api/dishes', dishRoutes);
 app.use('/api/orders', orderRoutes);
-
+app.use('/api/cart', cartRoutes); // ✅ Cart routes
 // ✅ MongoDB connection
 mongoose.connect('mongodb://127.0.0.1:27017/foodapp', {
   useNewUrlParser: true,

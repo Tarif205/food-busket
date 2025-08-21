@@ -7,8 +7,7 @@ const jwt = require('jsonwebtoken');
 
 // Simple function to create a token
 const generateToken = (id) => {
-  // Create a token with user id and a secret key
-  return jwt.sign({ id: id }, 'secretKey', { expiresIn: '1d' });
+  return jwt.sign({ id: id }, process.env.JWT_SECRET, { expiresIn: '1d' });
 };
 
 // ----------- Register a new user ----------

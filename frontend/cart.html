@@ -1,0 +1,28 @@
+// frontend/cart.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Food Basket - Cart</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header>
+    <h1>🍴 Food Basket - Cart</h1>
+    <nav>
+      <a href="index.html">Back to Dishes</a>
+      <button id="logoutBtn">Logout</button>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Your Cart</h2>
+    <div id="cart-items"></div>
+    <p><strong>Grand Total: $<span id="cart-total">0.00</span></strong></p>
+    <button id="confirmOrderBtn">Confirm Order</button>
+  </main>
+
+  <script src="src/components/cart.js"></script>
+</body>
+</html>

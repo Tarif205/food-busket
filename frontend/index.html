@@ -1,4 +1,4 @@
-//index.html
+<!-- //index.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,4 +15,43 @@
 
   <script src="src/components/app.js"></script>
 </body>
+</html> -->
+
+//frontend/index.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Food Basket - Catalog</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header>
+    <h1>🍴 Food Basket</h1>
+    <nav>
+      <button id="logoutBtn">Logout</button>
+    </nav>
+  </header>
+
+  <header>
+    <nav>
+      <!-- <a href="cart.html">Cart (<span id="cart-count">0</span>)</a> -->
+      <a href="cart.html">Cart</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Available Dishes</h2>
+    <div id="dish-list" class="dish-container"></div>
+  </main>
+
+  <!-- Make sure this path matches your project -->
+  <script src="src/components/app.js"></script>
+</body>
 </html>
+
+
+
+
